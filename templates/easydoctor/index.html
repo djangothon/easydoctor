@@ -74,14 +74,17 @@
 	        <h4 class="modal-title" id="myModalLabel1">Login</h4>
 	      </div>
 	      <div class="modal-body" id="login_details">
-	        <span> Already have an account? </span> </br></br>
+	        <span ng-hide = "!mainCtrl.response" ng-bind="mainCtrl.response"></span>
+          <span> Already have an account? </span> </br></br>
 	        *<span style="font-weight:bold;">Your Email</span><br />
-	        <input type="text" placeholder="example@gmail.com" name="login_email" /><br /></br>
+	        <input ng-model = "mainCtrl.user.emailId" type="text" placeholder="example@gmail.com" name="login_email" /><br /></br>
 	        *<span style="font-weight:bold;" >Password</span><br />
-	        <input type="password" placeholder="Password" name="login_password" /><br />
+          <input ng-model = "mainCtrl.user.password" type="password" placeholder="Password" name="login_password" /><br />
+          <input ng-model = "mainCtrl.user.category" type="radio" name="category" value="Patient" checked="checked"/>Patient<br> 
+          <input ng-model = "mainCtrl.user.category" type="radio" name="category" value="Doctor">Doctor </br></br>
 	      </div>
 	      <div class="modal-footer" >
-			<input style="float: left" type="button" class="btn btn-success" value="Log In" /> 
+			<input ng-disabled="!mainCtrl.user.category" style="float: left" type="button" class="btn btn-success" value="Log In" ng-click="mainCtrl.signIn()"/> 
 	       <span class="fp-link"> <a href="#">Forgot Password?</a></span>
 	       </br></br>
 			<span> Not a member yet?</span>
@@ -124,7 +127,7 @@
           </div>
 	      </div>
 	      <div class="modal-footer" >
-		<input ng-disabled="(mainCtrl.password != mainCtrl.rePassword) || !mainCtrl.category" style="float: left" type="button" class="btn btn-success"  value="Sign Me Up" /> 
+		<input ng-click="mainCtrl.signUp()" ng-disabled="(mainCtrl.password != mainCtrl.rePassword) || !mainCtrl.category" style="float: left" type="button" class="btn btn-success"  value="Sign Me Up" /> 
 	       <span>&nbsp;&nbsp;&nbsp; Already a member? </span><span id="login-link" class="text-info" style="cursor:pointer;">  Login now  </span> 
 		 </div>
 	    </div><!-- /.modal-content -->
