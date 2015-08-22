@@ -46,9 +46,8 @@ def verify (request):
 	if e.count() == 1:
 
 		request.session['session_id'] = request.COOKIES.get('sessionid') 
-		request.session['displayName'] = e.first().displayName
+		request.session['firstName'] = e.first().firstName
 
-		doctorData = {'firstName': e.first().firstName, 'lastName' : e.first().lastName, 'displayName' : e.first().displayName, 'emailId' : e.first().emailId }    
 		#return(HttpResponse("%s" %doctorData))
 		# for key, value in request.session.items():
 		# 	print str(key) + " : " + str(value)
