@@ -48,16 +48,11 @@ def verify (request):
 		e = doctor.objects.filter(emailId=email,password=password)
 	else :
 		e = patient.objects.filter(emailId=email,password=password)
-
 		
 	if e.count() == 1:
 
 		request.session['session_id'] = request.COOKIES.get('sessionid') 
 		request.session['firstName'] = e.first().firstName
-
-		#return(HttpResponse("%s" %doctorData))
-		# for key, value in request.session.items():
-		# 	print str(key) + " : " + str(value)
 		return redirect('http://localhost:8000/portal/dashboard/')
 	else :
 		return HttpResponse("Check Credintials")
