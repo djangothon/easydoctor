@@ -16,9 +16,10 @@ def signUp(request):
 	
 def signIn(request):
 	if 'session_id' not in request.session:
-		return render(request, 'easydoctor/signIn.html')
+		return render(request, 'easydoctor/portal/')
 	else:
 		return redirect('http://localhost:8000/portal/dashboard/')
+	
 
 def dashboard(request):
 	if 'session_id' not in request.session:
@@ -40,9 +41,15 @@ def showDoctor (request, doctorId):
 	return(HttpResponse("%s" %doctorData))
 
 def verify (request):
-	email = request.POST['email']
+	email = request.POST['emailId']
 	password = request.POST['password']
-	e = doctor.objects.filter(emailId=email,password=password)
+	category = request.POST['category']
+	if category == 'Doctor':
+		e = doctor.objects.filter(emailId=email,password=password)
+	else :
+		e = patient.objects.filter(emailId=email,password=password)
+
+		
 	if e.count() == 1:
 
 		request.session['session_id'] = request.COOKIES.get('sessionid') 
@@ -51,9 +58,9 @@ def verify (request):
 		#return(HttpResponse("%s" %doctorData))
 		# for key, value in request.session.items():
 		# 	print str(key) + " : " + str(value)
-		return redirect('http://localhost:8000/portal/dashboard/')
+		return 'http://localhost:8000/portal/dashboard/'
 	else :
-		return(HttpResponse("Check Credintials"))
+		return("Check Credintials")
 
 def logout(request):
     try:
