@@ -10,7 +10,7 @@
     <meta name="author" content="">
 
     <title>Welcome To Easydoctor</title>
-
+    <script src = "//ajax.googleapis.com/ajax/libs/angularjs/X.Y.Z/angular-cookies.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
     
     <link href="{% static 'bower_components/bootstrap/dist/css/bootstrap.css' %}" rel="stylesheet" media="screen">
@@ -74,17 +74,21 @@
 	        <h4 class="modal-title" id="myModalLabel1">Login</h4>
 	      </div>
 	      <div class="modal-body" id="login_details">
-	        <span ng-hide = "!mainCtrl.response" ng-bind="mainCtrl.response"></span>
-          <span> Already have an account? </span> </br></br>
-	        *<span style="font-weight:bold;">Your Email</span><br />
-	        <input ng-model = "mainCtrl.user.emailId" type="text" placeholder="example@gmail.com" name="login_email" /><br /></br>
-	        *<span style="font-weight:bold;" >Password</span><br />
-          <input ng-model = "mainCtrl.user.password" type="password" placeholder="Password" name="login_password" /><br />
-          <input ng-model = "mainCtrl.user.category" type="radio" name="category" value="Patient" checked="checked"/>Patient<br> 
-          <input ng-model = "mainCtrl.user.category" type="radio" name="category" value="Doctor">Doctor </br></br>
-	      </div>
-	      <div class="modal-footer" >
-			<input ng-disabled="!mainCtrl.user.category" style="float: left" type="button" class="btn btn-success" value="Log In" ng-click="mainCtrl.signIn()"/> 
+  	     <form action="verify/" method="POST">
+            {% csrf_token %}
+            <span ng-hide = "!mainCtrl.response" ng-bind="mainCtrl.response"></span>
+            <span> Already have an account? </span> </br></br>
+  	        *<span style="font-weight:bold;">Your Email</span><br />
+  	        <input ng-model = "mainCtrl.user.emailId" type="text" placeholder="example@gmail.com" name="emailId" /><br /></br>
+  	        *<span style="font-weight:bold;" >Password</span><br />
+            <input ng-model = "mainCtrl.user.password" type="password" placeholder="Password" name="password" /><br />
+            <input ng-model = "mainCtrl.user.category" type="radio" name="category" value="Patient" checked="checked"/>Patient<br> 
+            <input ng-model = "mainCtrl.user.category" type="radio" name="category" value="Doctor">Doctor </br></br>
+  	      </div>
+  	      <div class="modal-footer" >
+  			<input ng-disabled="!mainCtrl.user.category" style="float: left" type="submit" class="btn btn-success" value="Log In"/> 
+
+      </form>
 	       <span class="fp-link"> <a href="#">Forgot Password?</a></span>
 	       </br></br>
 			<span> Not a member yet?</span>

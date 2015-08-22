@@ -1,20 +1,6 @@
 app = angular.module("index", []);
-app.controller("mainCtrl", [ '$http', '$location', function (server, navigate) {
+app.controller("mainCtrl", ['$http', '$location', function (server, navigate) {
         var self = this;
-        self.test = "hi";
-        self.signIn = function (argument) {
-        	//console.log("User : "+self.user.emailId+" and "+self.user.category);
-        	self.param = {
-                method : 'POST',
-                url : 'portal/verify/',
-                data : self.user
-            };
-            server(self.param).then(function (response) {
-            	self.response = response.data;
-            }, function (errorResponse) {
-                console.log(errorResponse);
-            });
-        }
 }]);
 $(document).ready(function(){
 	

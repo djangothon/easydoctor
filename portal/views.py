@@ -58,14 +58,14 @@ def verify (request):
 		#return(HttpResponse("%s" %doctorData))
 		# for key, value in request.session.items():
 		# 	print str(key) + " : " + str(value)
-		return 'http://localhost:8000/portal/dashboard/'
+		return redirect('http://localhost:8000/portal/dashboard/')
 	else :
-		return("Check Credintials")
+		return HttpResponse("Check Credintials")
 
 def logout(request):
     try:
         del request.session['session_id'], request.session['displayName']
     except KeyError:
         pass
-    return redirect('http://localhost:8000/portal/signIn/')
+    return redirect('http://localhost:8000/portal/')
     # return HttpResponse("You're logged out.")
