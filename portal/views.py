@@ -1,39 +1,44 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from .forms import doctorForm
-from portal.models import doctor 
+from portal.forms import doctorForm, patientForm
+from portal.models import doctor, patient 
 
 
 def index(request) :
 	return render(request, 'easydoctor/index.html')
 
-def signUp(request):
-	if 'session_id' not in request.session:
-		return render(request, 'easydoctor/signUp.html')
-	else:
-		return redirect('http://localhost:8000/portal/dashboard/')
-	
-def signIn(request):
-	if 'session_id' not in request.session:
-		return render(request, 'easydoctor/portal/')
-	else:
-		return redirect('http://localhost:8000/portal/dashboard/')
-	
 
-def dashboard(request):
+def doctorDashboard(request):
 	if 'session_id' not in request.session:
-		return redirect('http://localhost:8000/portal/signIn/')
+		return redirect('http://localhost:8000/portal/')
 	else:
-		return render(request, 'easydoctor/dashboard.html')
+		return render(request, 'easydoctor/doctorDashboard.html')
 
-def registerDoctor (request):
-	data = doctorForm(request.POST)
-	if data.is_valid():
-  		data.save()
-		return(HttpResponse('<p>Thank you</p>'))
+def patientDashboard(request):
+	if 'session_id' not in request.session:
+		return redirect('http://localhost:8000/portal/')
+	else:
+		return render(request, 'easydoctor/patientDashboard.html')
+
+def register (request):
+	
+	category = request.POST['category']
+	if category == 'Doctor':
+		data = doctorForm(request.POST)
+		if data.is_valid():
+	  		data.save()
+			return(HttpResponse('<p>Thank you</p>'))
+		else :
+			return(HttpResponse('<p>Could not Register</p>'))
 	else :
-		return(HttpResponse('<p>Could not Register</p>'))
+		data = patientForm(request.POST)
+		print data
+		if data.is_valid():
+	  		data.save()
+			return(HttpResponse('<p>Thank you</p>'))
+		else :
+			return(HttpResponse('<p>Could not Register</p>'))
 
 def showDoctor (request, doctorId):
 	e = doctor.objects.filter(id=doctorId)
@@ -44,7 +49,7 @@ def verify (request):
 	email = request.POST['emailId']
 	password = request.POST['password']
 	category = request.POST['category']
-	if category == 'Doctor':
+	if category == 'doctor':
 		e = doctor.objects.filter(emailId=email,password=password)
 	else :
 		e = patient.objects.filter(emailId=email,password=password)
@@ -53,7 +58,7 @@ def verify (request):
 
 		request.session['session_id'] = request.COOKIES.get('sessionid') 
 		request.session['firstName'] = e.first().firstName
-		return redirect('http://localhost:8000/portal/dashboard/')
+		return redirect('http://localhost:8000/portal/'+ category +'Dashboard/')
 	else :
 		return HttpResponse("Check Credintials")
 

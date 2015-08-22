@@ -82,8 +82,8 @@
   	        <input ng-model = "mainCtrl.user.emailId" type="text" placeholder="example@gmail.com" name="emailId" /><br /></br>
   	        *<span style="font-weight:bold;" >Password</span><br />
             <input ng-model = "mainCtrl.user.password" type="password" placeholder="Password" name="password" /><br />
-            <input ng-model = "mainCtrl.user.category" type="radio" name="category" value="Patient" checked="checked"/>Patient<br> 
-            <input ng-model = "mainCtrl.user.category" type="radio" name="category" value="Doctor">Doctor </br></br>
+            <input ng-model = "mainCtrl.user.category" type="radio" name="category" value="patient" checked="checked"/>Patient<br> 
+            <input ng-model = "mainCtrl.user.category" type="radio" name="category" value="doctor">Doctor </br></br>
   	      </div>
   	      <div class="modal-footer" >
   			<input ng-disabled="!mainCtrl.user.category" style="float: left" type="submit" class="btn btn-success" value="Log In"/> 
@@ -107,31 +107,33 @@
 	        <h4 class="modal-title" id="myModalLabel2">Sign Up</h4>
 	      </div>
 	      <div class="modal-body" id="signup_details">
-	        <span>First Name</span>
-	        <input type="text" placeholder="First Name" name="firstName" /> </br></br>
-          <span>Last Name</span>
-          <input type="text" placeholder="Last Name" name="lastName" /> </br></br>
-	        *<span >Email</span>
-	        <input type="text" placeholder="example@gmail.com" name="emailId" /></br></br>
-	        *<span >Password</span>
-	        <input ng-model = "mainCtrl.password" type="password" placeholder="Password" name="password" /></br></br>
-	        *<span>Password Re-Type</span>
-	        <input ng-model = "mainCtrl.rePassword" type="password" placeholder="Re-type Password" name="rePassword" /></br></br>
-          <p ng-show="mainCtrl.password != mainCtrl.rePassword">Passwords do not match</p>
-          <input ng-model = "mainCtrl.category" type="radio" name="category" value="Patient" checked="checked"/>Patient<br> 
-          <input ng-model = "mainCtrl.category" type="radio" name="category" value="Doctor">Doctor </br></br>
-           <div ng-show = "mainCtrl.category == 'Doctor'"> 
-            <span>Specialization</span>
-            <select name = "specialization" >
-              <option value="orthopedic">Bones</option>
-              <option value="oncology">Cancer</option>
-              <option value="physician">Physician</option>
-              <option value="ent">Eye/Ear</option>
-            </select> 
-          </div>
-	      </div>
-	      <div class="modal-footer" >
-		<input ng-click="mainCtrl.signUp()" ng-disabled="(mainCtrl.password != mainCtrl.rePassword) || !mainCtrl.category" style="float: left" type="button" class="btn btn-success"  value="Sign Me Up" /> 
+  	     <form action='register/' method="POST"> {% csrf_token %}
+            <span>First Name</span>
+  	        <input type="text" placeholder="First Name" name="firstName" /> </br></br>
+            <span>Last Name</span>
+            <input type="text" placeholder="Last Name" name="lastName" /> </br></br>
+  	        *<span >Email</span>
+  	        <input type="text" placeholder="example@gmail.com" name="emailId" /></br></br>
+  	        *<span >Password</span>
+  	        <input ng-model = "mainCtrl.password" type="password" placeholder="Password" name="password" /></br></br>
+  	        *<span>Password Re-Type</span>
+  	        <input ng-model = "mainCtrl.rePassword" type="password" placeholder="Re-type Password" name="rePassword" /></br></br>
+            <p ng-show="mainCtrl.password != mainCtrl.rePassword">Passwords do not match</p>
+            <input ng-model = "mainCtrl.category" type="radio" name="category" value="Patient" checked="checked"/>Patient<br> 
+            <input ng-model = "mainCtrl.category" type="radio" name="category" value="Doctor">Doctor </br></br>
+             <div ng-show = "mainCtrl.category == 'Doctor'"> 
+              <span>Specialization</span>
+              <select name = "speciality" >
+                <option value="orthopedic">Bones</option>
+                <option value="oncology">Cancer</option>
+                <option value="physician">Physician</option>
+                <option value="ent">Eye/Ear</option>
+              </select> 
+            </div>
+  	      </div>
+  	      <div class="modal-footer" >
+  		<input ng-disabled="(mainCtrl.password != mainCtrl.rePassword) || !mainCtrl.category" style="float: left" type="submit" class="btn btn-success"  value="Sign Me Up" /> 
+      </form>
 	       <span>&nbsp;&nbsp;&nbsp; Already a member? </span><span id="login-link" class="text-info" style="cursor:pointer;">  Login now  </span> 
 		 </div>
 	    </div><!-- /.modal-content -->
